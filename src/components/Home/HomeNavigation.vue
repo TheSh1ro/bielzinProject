@@ -17,9 +17,14 @@
         </li>
 
         <template v-if="menu.isExpanded">
-          <li class="menu-item" v-for="option in menu.options" :key="option.label">
+          <span
+            class="menu-item"
+            v-for="option in menu.options"
+            :key="option.label"
+            @click="handleButtonClick(option)"
+          >
             <p>{{ option.label }}</p>
-          </li>
+          </span>
         </template>
       </ul>
     </nav>
@@ -27,6 +32,7 @@
 </template>
 
 <script>
+import { RouterLink } from 'vue-router'
 export default {
   data() {
     return {
@@ -37,7 +43,7 @@ export default {
           options: [
             { label: 'EloJob', path: '/lol/services' },
             { label: 'Ranking', path: '/lol/ranking' },
-            { label: 'Guides', path: '/lol/guide' },
+            { label: 'Guides', path: '/lol/guides' },
           ],
         },
         {
@@ -52,8 +58,8 @@ export default {
           label: 'Social Media',
           isExpanded: false,
           options: [
-            { label: 'Twitter', path: null, url: 'https://x.com/thesh1ro_' },
-            { label: 'Twitch', path: null, url: 'https://www.twitch.tv/' },
+            { label: 'Twitter', url: 'https://x.com/thesh1ro_' },
+            { label: 'Twitch', url: 'https://www.twitch.tv/bielzinlr' },
           ],
         },
       ],
@@ -61,8 +67,8 @@ export default {
     }
   },
   created() {},
-  onMounted() {},
-  onUnmounted() {
+  mounted() {},
+  unmounted() {
     this.intervalId = null
   },
   computed: {},
@@ -82,11 +88,20 @@ export default {
   },
 
   methods: {
+    handleButtonClick(option) {
+      if (option.path) {
+        this.$router.push({ path: option.path })
+      }
+
+      if (option.url) {
+        window.open(option.url, '_blank')
+      }
+    },
     startTimer() {
       // Inicia o intervalo de fechamento dos menus
       this.intervalId = setInterval(() => {
         this.closeAllMenus()
-      }, 3000)
+      }, 10000)
     },
 
     stopTimer() {
@@ -103,8 +118,9 @@ export default {
     },
 
     toggleMenuStatus(clickedMenu) {
-      this.closeAllMenus() // Fecha todos os menus antes de abrir o selecionado
-      clickedMenu.isExpanded = !clickedMenu.isExpanded // Alterna o estado do menu clicado
+      const wasExpanded = clickedMenu.isExpanded
+      this.closeAllMenus()
+      clickedMenu.isExpanded = !wasExpanded // Alterna o estado do menu clicado
     },
   },
 }
