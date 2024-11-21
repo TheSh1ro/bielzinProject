@@ -32,7 +32,6 @@
 </template>
 
 <script>
-import { RouterLink } from 'vue-router'
 export default {
   data() {
     return {
@@ -41,7 +40,7 @@ export default {
           label: 'League of Legends',
           isExpanded: false,
           options: [
-            { label: 'EloJob', path: '/lol/services' },
+            { label: 'EloJob', path: '/lol/shirojobs' },
             { label: 'Ranking', path: '/lol/ranking' },
             { label: 'Guides', path: '/lol/guides' },
           ],
@@ -165,6 +164,7 @@ export default {
         height: 60px;
         cursor: pointer;
         transition: all 0.1s;
+        background-color: rgba(0, 0, 0, 0.5);
 
         img {
           position: absolute;
@@ -174,7 +174,7 @@ export default {
         }
 
         &:hover {
-          background-color: rgba(0, 0, 0, 0.2);
+          background-color: rgba(0, 0, 0, 0.6);
         }
         &:first-of-type {
           border-top-left-radius: 10px;
